@@ -1,0 +1,7 @@
+{% extends "base.html" %}{% block title %}Enrolment Trends{% endblock %}
+{% block content %}<h1>Enrolment Trends</h1><p class="sub">New student intake per year with a straight-line forecast for the next year</p>
+{% if user['role'] != 'coordinator' %}<p><a class="btn sm {{ '' if by=='campus' else 'alt' }}" href="{{ url_for('trends', by='campus') }}">By campus</a> <a class="btn sm {{ '' if by=='programme' else 'alt' }}" href="{{ url_for('trends', by='programme') }}">By programme</a></p>{% endif %}
+<div class="card" style="margin-bottom:14px">{{ chart }}</div>
+<div class="tablewrap"><table><tr><th>{{ 'Campus' if by=='campus' else 'Programme' }}</th><th>Intake by year ({{ data[0].years[0] }}&ndash;{{ data[0].years[-1] }})</th><th>Change in latest year</th><th>Forecast {{ data[0].forecast_year }}</th><th>Status</th></tr>
+{% for d in data %}<tr><td>{{ d.name }}</td><td>{{ d['values']|join(', ') }}</td><td>{{ d.change }}%</td><td>{{ d.forecast }}</td><td>{% if d.warning %}<span class="badge b-high">Warning: falling intake</span>{% else %}<span class="badge b-ok">Stable / growing</span>{% endif %}</td></tr>{% endfor %}</table></div>
+<p class="small mt">A warning is raised when the latest yearly intake falls by 15% or more. The forecast is a simple trend line and is not a guarantee.</p>{% endblock %}

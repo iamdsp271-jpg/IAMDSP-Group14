@@ -1,0 +1,9 @@
+{% extends "base.html" %}{% block title %}At-Risk Students{% endblock %}
+{% block content %}<h1>At-Risk Students</h1><p class="sub">Predicted from CA scores, attendance and the previous term average (before exams) &middot; {{ risk|length }} student(s)</p>
+<div class="card" style="margin-bottom:14px"><b>How good is the prediction?</b>
+<p class="small" style="margin:6px 0 0">Model: logistic regression trained on completed terms ({{ metrics.training_rows }} training records, {{ metrics.test_rows }} test records). Accuracy on unseen test records: <b>{{ (metrics.accuracy*100)|round(1) }}%</b>; AUC: <b>{{ metrics.auc }}</b>. These are decision-support indicators only; the final decision belongs to the lecturer or management.</p></div>
+<p><a class="btn sm {{ '' if not level else 'alt' }}" href="{{ url_for('at_risk') }}">All</a> <a class="btn sm {{ '' if level=='High' else 'alt' }}" href="{{ url_for('at_risk', level='High') }}">High</a> <a class="btn sm {{ '' if level=='Medium' else 'alt' }}" href="{{ url_for('at_risk', level='Medium') }}">Medium</a>
+<a class="btn sm gold" href="{{ url_for('export', kind='at-risk') }}">Download (CSV)</a></p>
+<div class="tablewrap"><table><tr><th>Reg. No.</th><th>Name</th><th>Campus</th><th>Prog.</th><th>Avg CA</th><th>Attend.</th><th>Prev. avg</th><th>Risk</th><th>Why flagged</th></tr>
+{% for r in risk %}<tr><td>{{ r.reg_no }}</td><td><a href="{{ url_for('student_detail', sid=r.student_id) }}">{{ r.name }}</a></td><td>{{ r.campus }}</td><td>{{ r.programme }}</td><td>{{ r.ca_avg }}%</td><td>{{ r.attendance }}%</td><td>{{ (r.prev_avg|string ~ '%') if r.prev_avg is not none else 'new' }}</td>
+<td>{% include "_risk_badge.html" %}</td><td><ul class="reasons">{% for x in r.reasons %}<li>{{ x }}</li>{% endfor %}</ul></td></tr>{% endfor %}</table></div>{% endblock %}

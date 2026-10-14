@@ -1,0 +1,26 @@
+{% extends "base.html" %}{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h1>{{ 'Management Dashboard' if user['role'] in ('sysadmin','management') else 'Campus Dashboard' }}</h1>
+<p class="sub">Term: {{ current_term }}{% if user['role']=='coordinator' %} &middot; {{ rows[0].campus if rows }}{% else %} &middot; All campuses{% endif %}</p>
+<div class="cards">
+ <div class="card stat"><b>{{ n_students }}</b><span>Active students</span></div>
+ <div class="card stat"><b>{{ n_courses }}</b><span>Courses running this term</span></div>
+ <div class="card stat"><b>{{ n_staff }}</b><span>Lecturers &amp; coordinators</span></div>
+ <div class="card stat gold"><b>{{ n_risk }}</b><span>Students flagged at risk</span></div>
+ <div class="card stat warn"><b>{{ n_high }}</b><span>High-risk students</span></div>
+</div>
+<div class="grid2"><div class="card"><h2>Campus performance</h2>{{ perf }}</div>
+<div class="card"><h2>Enrolment trend</h2>{{ enr }}</div></div>
+<div class="grid2">
+<div class="card"><h2>Early-warning alerts</h2>
+ {% for a in alerts %}<div class="alert-row {{ a.type }}"><b>{{ a.type }} &ndash; {{ a.campus }}:</b> {{ a.message }}</div>
+ {% else %}<p class="small">No alerts at the moment.</p>{% endfor %}</div>
+<div class="card"><h2>Announcements</h2>
+ {% for a in anns %}<p><b>{{ a.title }}</b><br><span class="small">{{ a.posted_at }} &middot; {{ a.author }}</span><br>{{ a.body }}</p>{% endfor %}</div></div>
+<h2>Top at-risk students (with reasons)</h2>
+<div class="tablewrap"><table><tr><th>Reg. No.</th><th>Name</th><th>Campus</th><th>Programme</th><th>Risk</th><th>Why flagged</th></tr>
+{% for r in risk %}<tr><td>{{ r.reg_no }}</td><td>{{ r.name }}</td><td>{{ r.campus }}</td><td>{{ r.programme }}</td><td>{% include "_risk_badge.html" %}</td>
+<td><ul class="reasons">{% for x in r.reasons[:3] %}<li>{{ x }}</li>{% endfor %}</ul></td></tr>{% endfor %}</table></div>
+<p class="mt"><a class="btn alt" href="{{ url_for('at_risk') }}">See all flagged students</a></p>
+<p class="small mt">Indicators support decisions; they do not replace the final decision of the lecturer or management about a student.</p>
+{% endblock %}

@@ -1,0 +1,8 @@
+{% extends "base.html" %}{% block title %}Import Data{% endblock %}
+{% block content %}<h1>Import Campus Data</h1><p class="sub">Bring student lists from the campus spreadsheets into the central database. Duplicates are checked before anything is saved.</p>
+<div class="card" style="max-width:700px"><form method="post" enctype="multipart/form-data" class="stack"><input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+<p class="small">Save the campus spreadsheet as <b>CSV</b>. The first row must contain: <b>full_name, gender, phone, campus, programme_code, intake_year</b>. A sample file is in the <b>sample_data</b> folder.</p>
+<label>Choose CSV file</label><input type="file" name="file" accept=".csv"><p style="margin-top:14px"><button class="btn">Upload and check</button></p></form></div>
+{% if report %}<div class="grid2 mt"><div class="card"><h2>Added ({{ report.added|length }})</h2>{% for x in report.added %}<div class="small">{{ x }}</div>{% else %}<p class="small">None</p>{% endfor %}</div>
+<div class="card"><h2>Skipped - possible duplicates ({{ report.skipped|length }})</h2>{% for x in report.skipped %}<div class="small">{{ x }}</div>{% else %}<p class="small">None</p>{% endfor %}
+<h2 class="mt">Rows with errors ({{ report.errors|length }})</h2>{% for x in report.errors %}<div class="small">{{ x }}</div>{% else %}<p class="small">None</p>{% endfor %}</div></div>{% endif %}{% endblock %}

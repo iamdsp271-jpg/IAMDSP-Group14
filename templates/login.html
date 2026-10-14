@@ -1,0 +1,8 @@
+{% extends "base.html" %}{% block title %}Login{% endblock %}
+{% block content %}<div class="login-wrap"><div class="login-box">
+<h1>IAMDSP</h1><p><b>Intelligent Academic Management and Decision Support Platform</b><br>IPAM Extra-Mural Studies, University of Sierra Leone</p>
+<form method="post" class="stack"><input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+<label for="username">Username</label><input type="text" id="username" name="username" autofocus required>
+<label for="password">Password</label><input type="password" id="password" name="password" required>
+<p style="margin:18px 0 0"><button class="btn" style="width:100%">Log in</button></p></form>
+<p class="small mt">Project Group Fourteen &middot; Diploma in ICT &middot; 2026</p></div></div>{% endblock %}

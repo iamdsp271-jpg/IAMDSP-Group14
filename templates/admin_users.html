@@ -1,0 +1,10 @@
+{% extends "base.html" %}{% block title %}User Accounts{% endblock %}
+{% block content %}<h1>User Accounts</h1><p class="sub">Staff accounts. Student accounts are created automatically when a student is registered.</p>
+<div class="card" style="max-width:760px;margin-bottom:16px"><h2>Create staff account</h2><form method="post" class="stack"><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><input type="hidden" name="action" value="create">
+<div class="inline"><div><label>Full name</label><input type="text" name="full_name" required></div><div><label>Username</label><input type="text" name="username" required></div></div>
+<div class="inline"><div><label>Role</label><select name="role"><option value="lecturer">Lecturer</option><option value="coordinator">Campus Coordinator</option><option value="management">Management</option><option value="sysadmin">System Administrator</option></select></div>
+<div><label>Campus (lecturer / coordinator)</label><select name="campus_id"><option value="">-- none --</option>{% for c in campuses %}<option value="{{ c.id }}">{{ c.name }}</option>{% endfor %}</select></div>
+<div><label>Password (min. 8 characters)</label><input type="password" name="password" required></div></div><button class="btn">Create account</button></form></div>
+<div class="tablewrap"><table><tr><th>Name</th><th>Username</th><th>Role</th><th>Campus</th><th>Status</th><th></th></tr>
+{% for u in rows %}<tr><td>{{ u.full_name }}</td><td>{{ u.username }}</td><td>{{ role_labels[u.role] }}</td><td>{{ u.campus or '-' }}</td><td>{{ 'Active' if u.active else 'Disabled' }}</td>
+<td><form method="post" style="display:inline"><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><input type="hidden" name="uid" value="{{ u.id }}"><button name="action" value="toggle" class="btn sm alt">{{ 'Disable' if u.active else 'Enable' }}</button> <button name="action" value="reset" class="btn sm alt">Reset password</button></form></td></tr>{% endfor %}</table></div>{% endblock %}

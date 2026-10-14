@@ -1,0 +1,16 @@
+{% extends "base.html" %}{% block title %}Marks{% endblock %}
+{% block content %}<h1>{{ a.code }} &ndash; {{ a.title }}</h1><p class="sub">{{ a.campus }} &middot; {{ a.term }}</p>
+<div class="cards"><div class="card stat"><b>{{ stats.n }}</b><span>Students in class</span></div><div class="card stat"><b>{{ stats.entered }}</b><span>CA marks entered</span></div>
+<div class="card stat"><b>{{ stats.avg if stats.avg is not none else '-' }}</b><span>Class average (where exam entered)</span></div>
+<div class="card stat"><b>{{ (stats.pass_rate|string ~ '%') if stats.pass_rate is not none else '-' }}</b><span>Pass rate (where exam entered)</span></div></div>
+{% if can_edit %}<p class="small">Enter CA out of 40, Exam out of 60 and Attendance as a percentage (0-100). Leave a box empty if the mark is not ready yet.</p>
+<form method="post"><input type="hidden" name="csrf_token" value="{{ csrf_token }}">{% endif %}
+<div class="tablewrap"><table><tr><th>#</th><th>Reg. No.</th><th>Name</th><th>CA /40</th><th>Exam /60</th><th>Attendance %</th><th>Total</th><th>Grade</th></tr>
+{% for r in rows %}{% set tot = (r.ca_score + r.exam_score) if (r.ca_score is not none and r.exam_score is not none) else none %}
+<tr><td>{{ loop.index }}</td><td>{{ r.reg_no }}</td><td>{{ r.full_name }}</td>
+{% if can_edit %}<td><input type="number" step="0.1" min="0" max="40" name="ca_{{ r.id }}" value="{{ r.ca_score if r.ca_score is not none }}" style="width:80px"></td>
+<td><input type="number" step="0.1" min="0" max="60" name="exam_{{ r.id }}" value="{{ r.exam_score if r.exam_score is not none }}" style="width:80px"></td>
+<td><input type="number" step="0.1" min="0" max="100" name="att_{{ r.id }}" value="{{ r.attendance if r.attendance is not none }}" style="width:90px"></td>
+{% else %}<td>{{ r.ca_score if r.ca_score is not none else '-' }}</td><td>{{ r.exam_score if r.exam_score is not none else '-' }}</td><td>{{ r.attendance if r.attendance is not none else '-' }}</td>{% endif %}
+<td>{{ tot|round(1) if tot is not none else '-' }}</td><td>{{ grade(tot) }}</td></tr>{% endfor %}</table></div>
+{% if can_edit %}<p class="mt"><button class="btn">Save marks</button> <a class="btn alt" href="{{ url_for('dashboard') }}">Back</a></p></form>{% else %}<p class="small mt">View only. Only the allocated lecturer can enter marks for the current term.</p>{% endif %}{% endblock %}

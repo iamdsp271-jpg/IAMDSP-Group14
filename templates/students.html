@@ -1,0 +1,9 @@
+{% extends "base.html" %}{% block title %}Students{% endblock %}
+{% block content %}<h1>Students</h1><p class="sub">{{ rows|length }} student(s) found</p>
+<form method="get" class="inline"><div><input type="text" name="q" placeholder="Search name or reg. no." value="{{ q }}"></div>
+{% if user['role'] != 'coordinator' %}<div><select name="campus"><option value="">All campuses</option>{% for c in campuses %}<option value="{{ c.id }}" {{ 'selected' if campus|string==c.id|string }}>{{ c.name }}</option>{% endfor %}</select></div>{% endif %}
+<div><select name="programme"><option value="">All programmes</option>{% for p in programmes %}<option value="{{ p.id }}" {{ 'selected' if prog|string==p.id|string }}>{{ p.code }} - {{ p.name }}</option>{% endfor %}</select></div>
+<div style="flex:0"><button class="btn">Search</button></div></form>
+<p><a class="btn alt sm" href="{{ url_for('export', kind='students') }}">Download list (CSV)</a></p>
+<div class="tablewrap"><table><tr><th>Reg. No.</th><th>Name</th><th>Gender</th><th>Campus</th><th>Programme</th><th>Intake</th><th>Status</th><th></th></tr>
+{% for s in rows %}<tr><td>{{ s.reg_no }}</td><td>{{ s.full_name }}</td><td>{{ s.gender }}</td><td>{{ s.campus }}</td><td>{{ s.pcode }}</td><td>{{ s.intake_year }}</td><td>{{ s.status }}</td><td><a href="{{ url_for('student_detail', sid=s.id) }}">View</a></td></tr>{% endfor %}</table></div>{% endblock %}

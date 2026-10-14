@@ -1,0 +1,5 @@
+{% extends "base.html" %}{% block title %}My Record{% endblock %}
+{% block content %}<h1>Welcome, {{ s.full_name }}</h1><p class="sub">{{ s.reg_no }} &middot; {{ s.programme }} &middot; {{ s.campus }}</p>
+<div class="cards"><div class="card stat"><b>{{ s.status }}</b><span>Registration status</span></div><div class="card stat"><b>{{ regs }}</b><span>Courses registered ({{ current_term }})</span></div><div class="card stat"><b>{{ s.intake_year }}</b><span>Year of intake</span></div></div>
+{% include "_record_table.html" %}
+<h2 class="mt">Academic announcements</h2>{% for a in anns %}<div class="card" style="margin-bottom:8px"><b>{{ a.title }}</b><br><span class="small">{{ a.posted_at }} &middot; {{ a.author }}</span><br>{{ a.body }}</div>{% endfor %}{% endblock %}

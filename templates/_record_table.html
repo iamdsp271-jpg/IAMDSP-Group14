@@ -1,0 +1,4 @@
+<h2>Academic record</h2><div class="tablewrap"><table><tr><th>Term</th><th>Code</th><th>Course</th><th>CA /40</th><th>Exam /60</th><th>Total</th><th>Grade</th><th>Result</th><th>Attendance</th></tr>
+{% for r in record %}<tr><td>{{ r.term }}</td><td>{{ r.code }}</td><td>{{ r.title }}</td><td>{{ r.ca if r.ca is not none else '-' }}</td><td>{{ r.exam if r.exam is not none else 'pending' }}</td>
+<td>{{ r.total if r.total is not none else '-' }}</td><td>{{ r.grade }}</td><td>{% if r.status=='Pass' %}<span class="badge b-ok">Pass</span>{% elif r.status=='Fail' %}<span class="badge b-high">Fail</span>{% else %}-{% endif %}</td>
+<td>{{ (r.attendance|round|int)|string ~ '%' if r.attendance is not none else '-' }}</td></tr>{% endfor %}</table></div>

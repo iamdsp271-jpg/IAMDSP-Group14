@@ -1,0 +1,7 @@
+{% extends "base.html" %}{% block title %}Announcements{% endblock %}
+{% block content %}<h1>Academic Announcements</h1><p class="sub">Notices for students and staff</p>
+{% if user['role'] in ('sysadmin','management','coordinator') %}<div class="card" style="max-width:700px;margin-bottom:16px"><h2>Post a new announcement</h2><form method="post" class="stack"><input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+<label>Title</label><input type="text" name="title" required><label>Message</label><textarea name="body" rows="3" required></textarea>
+{% if user['role'] != 'coordinator' %}<label>Send to</label><select name="campus_id"><option value="">All campuses</option>{% for c in campuses %}<option value="{{ c.id }}">{{ c.name }}</option>{% endfor %}</select>{% endif %}
+<p style="margin-top:14px"><button class="btn">Post</button></p></form></div>{% endif %}
+{% for a in rows %}<div class="card" style="margin-bottom:10px"><b>{{ a.title }}</b> <span class="badge b-ok">{{ a.campus or 'All campuses' }}</span><br><span class="small">{{ a.posted_at }} &middot; {{ a.author }}</span><p style="margin:6px 0 0">{{ a.body }}</p></div>{% endfor %}{% endblock %}

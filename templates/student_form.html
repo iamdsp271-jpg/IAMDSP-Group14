@@ -1,0 +1,11 @@
+{% extends "base.html" %}{% block title %}Register Student{% endblock %}
+{% block content %}<h1>Register New Student</h1><p class="sub">The system creates the registration number, the student login and registers the student for this term's courses.</p>
+<div class="card" style="max-width:640px"><form method="post" class="stack"><input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+<label>Full name</label><input type="text" name="full_name" value="{{ form.get('full_name','') }}" required>
+<label>Gender</label><select name="gender"><option value="">-- choose --</option><option {{ 'selected' if form.get('gender')=='Female' }}>Female</option><option {{ 'selected' if form.get('gender')=='Male' }}>Male</option></select>
+<label>Phone</label><input type="text" name="phone" value="{{ form.get('phone','') }}" placeholder="+232 76 000000">
+{% if user['role']=='sysadmin' %}<label>Campus</label><select name="campus_id"><option value="">-- choose --</option>{% for c in campuses %}<option value="{{ c.id }}" {{ 'selected' if form.get('campus_id')|string==c.id|string }}>{{ c.name }}</option>{% endfor %}</select>{% endif %}
+<label>Programme</label><select name="programme_id"><option value="">-- choose --</option>{% for p in programmes %}<option value="{{ p.id }}" {{ 'selected' if form.get('programme_id')|string==p.id|string }}>{{ p.name }}</option>{% endfor %}</select>
+<label>Intake year</label><input type="number" name="intake_year" value="{{ form.get('intake_year', 2026) }}" min="2025" max="2026">
+{% if dup %}<label style="margin-top:14px"><input type="checkbox" name="confirm_duplicate" value="1"> I confirm this is a different person</label>{% endif %}
+<p style="margin-top:18px"><button class="btn">Register student</button></p></form></div>{% endblock %}

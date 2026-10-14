@@ -1,0 +1,4 @@
+{% extends "base.html" %}{% block title %}Campuses{% endblock %}
+{% block content %}<h1>Campuses</h1><p class="sub">Add new campuses so the system can grow beyond the case-study campuses.</p>
+<div class="card" style="max-width:640px;margin-bottom:16px"><form method="post" class="stack"><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><div class="inline"><div><label>Campus name</label><input type="text" name="name" required></div><div><label>Location</label><input type="text" name="location" required></div></div><button class="btn">Add campus</button></form></div>
+<div class="tablewrap"><table><tr><th>Campus</th><th>Location</th><th>Students</th><th>Staff</th></tr>{% for c in rows %}<tr><td>{{ c.name }}</td><td>{{ c.location }}</td><td>{{ c.students }}</td><td>{{ c.staff }}</td></tr>{% endfor %}</table></div>{% endblock %}

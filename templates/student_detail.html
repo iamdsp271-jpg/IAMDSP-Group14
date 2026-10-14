@@ -1,0 +1,6 @@
+{% extends "base.html" %}{% block title %}{{ s.full_name }}{% endblock %}
+{% block content %}<h1>{{ s.full_name }}</h1><p class="sub">{{ s.reg_no }} &middot; {{ s.programme }} &middot; {{ s.campus }}</p>
+<div class="cards"><div class="card"><b>Gender</b><br>{{ s.gender }}</div><div class="card"><b>Phone</b><br>{{ s.phone or '-' }}</div><div class="card"><b>Intake</b><br>{{ s.intake_year }}</div><div class="card"><b>Status</b><br>{{ s.status }}</div></div>
+{% if user['role'] in ('sysadmin','coordinator') %}<form method="post" action="{{ url_for('student_status', sid=s.id) }}" class="inline"><input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+<div style="flex:0 0 200px"><select name="status">{% for x in ['Active','Deferred','Withdrawn'] %}<option {{ 'selected' if s.status==x }}>{{ x }}</option>{% endfor %}</select></div><div style="flex:0"><button class="btn sm">Update status</button></div></form>{% endif %}
+{% include "_record_table.html" %}{% endblock %}

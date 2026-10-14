@@ -1,0 +1,10 @@
+{% extends "base.html" %}{% block title %}Reports{% endblock %}
+{% block content %}<h1>Institutional Report</h1><p class="sub">IPAM Extra-Mural Studies &middot; generated {{ now }} &middot; last completed term: {{ last }}</p>
+<p class="noprint"><button class="btn" onclick="window.print()">Print report</button> <a class="btn alt" href="{{ url_for('export', kind='campus') }}">Download campus summary (CSV)</a> <a class="btn alt" href="{{ url_for('export', kind='at-risk') }}">Download at-risk list (CSV)</a></p>
+<div class="card" style="margin-bottom:14px">{{ pass_chart }}</div>
+<h2>1. Campus summary</h2><div class="tablewrap"><table><tr><th>Campus</th><th>Active students</th><th>Pass rate ({{ last }})</th><th>Average mark</th><th>Current avg CA</th><th>Current avg attendance</th></tr>
+{% for r in rows %}<tr><td>{{ r.campus }}</td><td>{{ enrol[r.campus] }}</td><td>{{ r.prev_pass }}%</td><td>{{ r.prev_avg }}</td><td>{{ r.cur_ca }}%</td><td>{{ r.cur_att }}%</td></tr>{% endfor %}</table></div>
+<h2 class="mt">2. Performance by programme ({{ last }})</h2><div class="tablewrap"><table><tr><th>Code</th><th>Programme</th><th>Students</th><th>Average mark</th><th>Pass rate</th></tr>
+{% for p in prog %}<tr><td>{{ p.code }}</td><td>{{ p.name }}</td><td>{{ p.students }}</td><td>{{ p.avg }}</td><td>{{ p.pass_rate }}%</td></tr>{% endfor %}</table></div>
+<h2 class="mt">3. Staffing by campus</h2><div class="tablewrap"><table><tr><th>Campus</th><th>Lecturers</th><th>Coordinators</th></tr>
+{% for k, v in staff.items() %}<tr><td>{{ k }}</td><td>{{ v.lecturers }}</td><td>{{ v.coordinators }}</td></tr>{% endfor %}</table></div>{% endblock %}

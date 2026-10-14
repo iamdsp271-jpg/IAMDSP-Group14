@@ -1,0 +1,169 @@
+{
+  "total": 27,
+  "passed": 27,
+  "seconds": 4.19,
+  "rows": [
+    {
+      "id": "TC01",
+      "action": "Log in with the group username (Group Fourteen) and passcode",
+      "expected": "Dashboard opens",
+      "result": "Pass"
+    },
+    {
+      "id": "TC02",
+      "action": "Log in with a wrong password",
+      "expected": "Login refused with an error message",
+      "result": "Pass"
+    },
+    {
+      "id": "TC03",
+      "action": "Open the dashboard without logging in",
+      "expected": "Redirected to the login page",
+      "result": "Pass"
+    },
+    {
+      "id": "TC04",
+      "action": "Lecturer tries to open User Accounts",
+      "expected": "Access denied (403)",
+      "result": "Pass"
+    },
+    {
+      "id": "TC05",
+      "action": "Student tries to open the student list",
+      "expected": "Access denied (403)",
+      "result": "Pass"
+    },
+    {
+      "id": "TC06",
+      "action": "Submit a form without the security token",
+      "expected": "Request rejected (400)",
+      "result": "Pass"
+    },
+    {
+      "id": "TC07",
+      "action": "Change password with a wrong old password",
+      "expected": "Change refused",
+      "result": "Pass"
+    },
+    {
+      "id": "TC10",
+      "action": "Coordinator registers a new student",
+      "expected": "Student saved, reg. no. created, 4 courses registered, student login created",
+      "result": "Pass"
+    },
+    {
+      "id": "TC11",
+      "action": "Register a student whose name already exists",
+      "expected": "Duplicate warning shown, nothing saved",
+      "result": "Pass"
+    },
+    {
+      "id": "TC12",
+      "action": "Submit the registration form with missing fields",
+      "expected": "Validation message, nothing saved",
+      "result": "Pass"
+    },
+    {
+      "id": "TC13",
+      "action": "Coordinator opens a student from another campus",
+      "expected": "Page not found (404)",
+      "result": "Pass"
+    },
+    {
+      "id": "TC14",
+      "action": "Import a campus CSV containing new, duplicate and invalid rows",
+      "expected": "New rows added, duplicate skipped, invalid rows reported",
+      "result": "Pass"
+    },
+    {
+      "id": "TC20",
+      "action": "Lecturer saves valid CA, exam and attendance marks",
+      "expected": "Marks stored in the database",
+      "result": "Pass"
+    },
+    {
+      "id": "TC21",
+      "action": "Lecturer enters CA = 45 (maximum is 40)",
+      "expected": "Mark rejected with an error, old value kept",
+      "result": "Pass"
+    },
+    {
+      "id": "TC22",
+      "action": "Lecturer opens a class that belongs to another lecturer",
+      "expected": "Access denied (403)",
+      "result": "Pass"
+    },
+    {
+      "id": "TC30",
+      "action": "Student logs in and opens My Academic Record",
+      "expected": "Own name, courses and results are shown",
+      "result": "Pass"
+    },
+    {
+      "id": "TC40",
+      "action": "Grade function at boundaries (70, 60, 50, 40, 39.9)",
+      "expected": "A, B, C, D, F",
+      "result": "Pass"
+    },
+    {
+      "id": "TC41",
+      "action": "Open the at-risk list",
+      "expected": "Students flagged, every student has at least one reason",
+      "result": "Pass"
+    },
+    {
+      "id": "TC42",
+      "action": "Check prediction accuracy on unseen records",
+      "expected": "Accuracy at least 80%",
+      "result": "Pass"
+    },
+    {
+      "id": "TC43",
+      "action": "Check enrolment trend for Makeni Campus",
+      "expected": "Warning raised for falling intake",
+      "result": "Pass"
+    },
+    {
+      "id": "TC44",
+      "action": "Compare campus pass rate shown by the system with a direct database calculation",
+      "expected": "Values match",
+      "result": "Pass"
+    },
+    {
+      "id": "TC45",
+      "action": "Open early-warning alerts on the dashboard",
+      "expected": "Alerts exist for Makeni (performance and enrolment)",
+      "result": "Pass"
+    },
+    {
+      "id": "TC50",
+      "action": "Management downloads the campus summary CSV",
+      "expected": "CSV file with header and four campus rows",
+      "result": "Pass"
+    },
+    {
+      "id": "TC51",
+      "action": "System administrator creates a lecturer account",
+      "expected": "Account created and can log in",
+      "result": "Pass"
+    },
+    {
+      "id": "TC52",
+      "action": "Create an account with a username that already exists",
+      "expected": "Refused with an error",
+      "result": "Pass"
+    },
+    {
+      "id": "TC53",
+      "action": "Management user opens User Accounts",
+      "expected": "Access denied (403)",
+      "result": "Pass"
+    },
+    {
+      "id": "TC54",
+      "action": "Coordinator posts an announcement",
+      "expected": "Announcement visible to students of that campus",
+      "result": "Pass"
+    }
+  ]
+}

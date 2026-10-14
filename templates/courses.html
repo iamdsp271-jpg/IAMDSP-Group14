@@ -1,0 +1,4 @@
+{% extends "base.html" %}{% block title %}Courses{% endblock %}
+{% block content %}<h1>Courses and Lecturers</h1><p class="sub">Course allocations for {{ current_term }}</p>
+<div class="tablewrap"><table><tr><th>Code</th><th>Course</th><th>Programme</th><th>Campus</th><th>Lecturer</th><th>Students</th><th></th></tr>
+{% for r in rows %}<tr><td>{{ r.code }}</td><td>{{ r.title }}</td><td>{{ r.pcode }}</td><td>{{ r.campus }}</td><td>{{ r.lecturer }}</td><td>{{ r.n }}</td><td><a href="{{ url_for('marks', aid=r.id) }}">Class list</a></td></tr>{% endfor %}</table></div>{% endblock %}
